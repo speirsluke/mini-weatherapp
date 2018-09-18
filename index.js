@@ -6,13 +6,12 @@ function createNode(element){
     return parent.appendChild(element)
   } 
   
-//   ;
+
   let mainImageDiv = document.querySelector('.photo');
   let weatherDescription = document.querySelector('#conditions')
   let credits = document.querySelector('#credit-user');
   let form = document.querySelector('.search'); 
   let input = document.querySelector('.search__input')
-//   let city = "london";
   let thumbNailsDiv = document.querySelector('.thumbs');
   let thumbNails = document.querySelector('.thumb');
   function imageFetch(description) {
@@ -26,7 +25,7 @@ function createNode(element){
         mainImage.src = data.results[0].urls.regular;
          credits.textContent = data.results[0].user.name;
          credits.href = data.results[0].user.links.html;
-         // user.links.html
+        
         append(mainImageDiv, mainImage);
         data.results.map(function(image){
            let images = createNode('img')
@@ -64,10 +63,11 @@ fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=886ac1fdab
     return response.json();
 })
 .then(function(data){
+    console.log(data)
     let weather = data.weather; 
     //console.log(weather[0].description)
     imageFetch(weather[0].description);
-    weatherDescription.innerHTML = `${weather[0].description}`
+    weatherDescription.innerHTML = `${weather[0].description} - temperature (celcius): ${convertToCelcius(data.main.temp)}`
 })
 
 }
@@ -84,3 +84,8 @@ form.addEventListener('submit', function(event){
     weatherFetch(city);
     }
 });
+
+function convertToCelcius(kelvin) {
+    return (kelvin - 273.15).toFixed(1)
+    
+}
