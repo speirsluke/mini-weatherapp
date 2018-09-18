@@ -27,34 +27,14 @@ function createNode(element){
          credits.href = data.results[0].user.links.html;
         
         append(mainImageDiv, mainImage);
-        data.results.forEach(function(image){
-           let images = createNode('img')
-            images.src = image.urls.regular;
-            images.className = 'thumb';
-            images.textContent = image.user.name;
-            images.href = image.user.links.html;
-            append(thumbs, images)
+        createThumb(data);
 
             let thumbNails = document.querySelectorAll('.thumb');
-            thumbNails.forEach(function(image){
-                image.addEventListener('click', function(event){
-                    credits.textContent = "";
-                    credits.href = "";
-                    mainImageDiv.innerHTML = ""; 
-                    let mainImage = createNode('img');
-                    mainImage.src = event.target.src;
-                    credits.textContent = image.textContent;
-                    credits.href = image.href;
-                    append(mainImageDiv, mainImage)
-                    
-
-                    
-                })
-            })
+            
+            addListener(thumbNails)
         })
     
-    })
-}
+    }
 
 
 function weatherFetch(city='london') {
@@ -88,4 +68,33 @@ form.addEventListener('submit', function(event){
 function convertToCelcius(kelvin) {
     return (kelvin - 273.15).toFixed(1)
     
+}
+
+function createThumb(data){
+    data.results.forEach(function(image) {
+     let images = createNode('img');
+     images.src = image.urls.regular;
+     images.className = 'thumb';
+     images.textContent = image.user.name;
+     images.href = image.user.links.html;
+     append(thumbs, images);
+    })
+}
+
+function addListener(imgArray){
+    imgArray.forEach(function(image){
+        image.addEventListener('click', function(event){     
+    credits.textContent = "";
+        credits.href = "";
+        mainImageDiv.innerHTML = ""; 
+        let mainImage = createNode('img');
+        mainImage.src = event.target.src;
+        credits.textContent = image.textContent;
+        credits.href = image.href;
+        append(mainImageDiv, mainImage)
+        
+
+        
+    })
+})
 }
