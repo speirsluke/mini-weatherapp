@@ -14,6 +14,7 @@ function createNode(element){
   let input = document.querySelector('.search__input')
   let thumbNailsDiv = document.querySelector('.thumbs');
   let thumbNails = document.querySelector('.thumb');
+  
   function imageFetch(description) {
     fetch(`https://api.unsplash.com/search/photos?query=${description}&client_id=c983e2460b497eab772c710349148927497de703a9dd2f4a61217006c714e76b`)
     .then(function(response){
@@ -62,6 +63,7 @@ form.addEventListener('submit', function(event){
     thumbNailsDiv.innerHTML = "";
     mainImageDiv.innerHTML = "";
     weatherFetch(city);
+    input.value = "";
     }
 });
 
@@ -92,7 +94,6 @@ function addListener(imgArray){
         credits.textContent = image.textContent;
         credits.href = image.href;
         append(mainImageDiv, mainImage)
-        
 
         
     })
